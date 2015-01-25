@@ -1,17 +1,11 @@
-# yancha-client-c
+# yancha-client-projects
 
-\[WIP\]: [yancha](https://github.com/uzulla/yancha) client for c language study.
+work in progress
 
-## Build and run unit test
+## Structure
 
-``` sh
-$ mkdir build && cd build
-$ cmake .. && make && ./yancha_client_c
-# or on the CLion, run to "yancha_client_c"
-```
+- android:\(TBD\) Android application client
+- core: common resources writen by C
+- ios: \(TBD\) iOS application client
+- web: \(TBD\) Web application client with [Emscripten](https://github.com/kripken/emscripten)
 
-## Develop Environment
-
-- CLion - CL-140.1740.3
-- cmake - 3.0.0
-- clang - Apple LLVM version 6.0
