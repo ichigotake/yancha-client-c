@@ -1,15 +1,8 @@
 #ifndef yancha_h
 #define yancha_h
 
-#include "curl/curl.h"
-
 #define YANCHA_REST_API_RESPONSE_OK 0;
 #define YANCHA_REST_API_RESPONSE_FAIL 1;
-
-typedef struct {
-    char* token;
-    yancha_user_t user;
-} yancha_connection_t;
 
 typedef struct {
     char* key;
@@ -17,6 +10,12 @@ typedef struct {
     char* profile_url;
     char* profile_image_url;
 } yancha_user_t;
+
+typedef struct {
+    char* serverUrl;
+    char* token;
+    char* nickname;
+} yancha_connection_t;
 
 typedef struct {
     int page;
@@ -29,13 +28,17 @@ typedef struct {
     long timestamp_ms;
 } yancha_message_t;
 
-yancha_connection_t yancha_login();
+yancha_connection_t yancha_init(char* serverUrl);
 
-yancha_message_t* yancha_search(yancha_search_condition_t condition);
+yancha_search_condition_t yancha_search_condition_init();
+
+void yancha_login(yancha_connection_t* connection, char* nickname);
+
+void yancha_search(yancha_message_t* response, yancha_search_condition_t condition);
 
 // Return the YANCHA_REST_API_RESPONSE_*
-int yancha_post(yancha_connection_t connection, char* message);
+int yancha_post(yancha_connection_t* connection, char* message);
 
-yancha_user_t* yancha_login_users(yancha_connection_t connection);
+void yancha_login_users(yancha_user_t* response, yancha_connection_t connection);
 
 #endif
