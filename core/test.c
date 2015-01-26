@@ -4,9 +4,8 @@
 #include "test.h"
 #include "yancha.h"
 
-void yancha_test_client()
-{
-    char* name = "taro";
+void yancha_test_client() {
+    char *name = "taro";
 
     yancha_connection_t connection = yancha_init("http://127.0.0.1:3000");
     ok(connection.token == NULL);
