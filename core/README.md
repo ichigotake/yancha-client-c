@@ -5,6 +5,11 @@
 ## Build and run unit test
 
 ``` sh
+# depends Jansson
+$ git clone https://github.com/akheron/jansson && cd jansson
+$ mkdir build && cd build && cmake .. && make && make install
+
+# run unit test
 $ mkdir build && cd build
 $ cmake .. && make && ./yancha_client_c
 # or on the CLion, run to "core"
