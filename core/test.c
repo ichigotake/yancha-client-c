@@ -7,18 +7,29 @@
 void yancha_test_client() {
     char *name = "taro";
 
-    yancha_connection_t connection = yancha_init("http://127.0.0.1:3000");
-    ok(connection.token == NULL);
+    yancha_t *yancha = yancha_init("http://127.0.0.1:3000", 1000);
+    ok(yancha->connection.token == NULL);
 
-    yancha_login(&connection, name);
-    ok(strlen(connection.token) > 0);
-    ok(!strcmp(connection.nickname, name));
+    yancha_login(yancha, name);
+    ok(strlen(yancha->connection.token) > 0);
+    ok(!strcmp(yancha->connection.nickname, name));
 
-    yancha_post(&connection, "Hello!");
+    yancha_post(yancha, "Hello!");
 
-    fprintf(stderr, "TODO:(@ichigotake) No implements: yancha_search\n");
-    ok(0);
+    yancha_message_t messages[yancha->max_message_size];
+    yancha_search_condition_t condition = yancha_search_condition_init();
+    yancha_search(yancha, messages, condition);
+    ok(1);
 
-    fprintf(stderr, "TODO:(@ichigotake) No implements: yancha_login_users\n");
-    ok(0);
+    for (size_t i = 0; i < yancha->max_message_size; i++) {
+        yancha_message_t *msg = &messages[i];
+        if (msg->text == NULL) {
+            break;
+        }
+        yancha_user_t author = msg->author;
+        printf("%ld %s[%s]:(%s|%s)\n%s\n----\n", msg->created_at_ms, author.key, author.nickname,
+               author.profile_url, author.profile_image_url, msg->text);
+    }
+
+    yancha_cleanup(yancha);
 }
